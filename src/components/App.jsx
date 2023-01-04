@@ -1,6 +1,6 @@
-import { render } from "@testing-library/react";
+// import { render } from "@testing-library/react";
 import { Component } from "react";
- import { ToastContainer, toast } from 'react-toastify';
+//  import { ToastContainer, toast } from 'react-toastify';
 import { Searchbar } from "./Searchbar/Searchbar";
 import { fetchImages } from "../Services/Api";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
