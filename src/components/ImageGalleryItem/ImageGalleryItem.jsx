@@ -1,7 +1,9 @@
-export const ImageGalleryItem = (webformatURL, largeImageURL)=>{
+import css from './ImageGalleryItem.module.css'
+
+export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
     return (
-        <li>
-  <img src="{webformatURL}" alt="" />
+        <li className={css.imageGalleryItem}>
+  <img className={css.imageGalleryItem_image} src={webformatURL} alt="" />
 </li>
     )
 }

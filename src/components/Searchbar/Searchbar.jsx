@@ -1,31 +1,45 @@
+
+import { Component } from 'react';
 import css from './Seachbar.module.css';
-import { Formik } from 'formik';
 
-export const Searchbar = ({onSubmit})=> {
-    
-  const handleSubmit = (values, actions) => {
-        onSubmit(values);
-        actions.resetForm();
-    }
+export class Searchbar extends Component {
+  state = {
+    search: '',
+  };
+
+  inputChange = e => {
+    const { value } = e.currentTarget;
+    this.setState({ search: value });
+  };
   
-  return (  
-          <header className={css.searchbar}>
-          <Formik initialValues={{ query: '' }}
-      onSubmit={handleSubmit}>
-  <form className={css.searchForm}>
-    <button type="submit" className={css.searchForm_button}>
-      <span >Search</span>
-    </button>
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.onSubmit(this.state.search.toLowerCase());
+    this.setState({ search: '' });
+  };
+  render() {
+    return (
+    
+      <header className={css.searchbar}>
+        <form className={css.searchForm} onSubmit={this.handleSubmit}>
+          <button type="submit" className={css.searchForm_button}>
+            <span >Search</span>
+          </button>
 
-    <input
-      type="text"
-      name="query"
-       autoComplete="off"
-       autoFocus
-       placeholder="Search images and photos"
-    />
-              </form>
-          </Formik>
+          <input
+            type="text"
+            name="query"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            onChange={this.inputChange}
+            value={this.state.search}
+          />
+        </form>
+          
       </header>
+    
     );
   };
+}
+

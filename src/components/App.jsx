@@ -1,9 +1,10 @@
-// import { render } from "@testing-library/react";
-import { Component } from "react";
+
+import { Component } from 'react';
 //  import { ToastContainer, toast } from 'react-toastify';
-import { Searchbar } from "./Searchbar/Searchbar";
-import { fetchImages } from "../Services/Api";
-import { ImageGallery } from "./ImageGallery/ImageGallery";
+import { Searchbar } from './Searchbar/Searchbar';
+import { fetchImages } from '../Services/Api';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Spiner } from './ImageGalleryItem/Spiner/Spiner';
 
 export class App extends Component {
   state = {
@@ -12,51 +13,59 @@ export class App extends Component {
     page: 1,
     images: [],
     
-  }
+  };
+
 
   async componentDidUpdate(_, prevState) {
     const { page, query } = this.state;
-    try {
-      
-       if (prevState.query !== query || prevState.page !== page) {
+  
+      if (prevState.query !== query || prevState.page !== page) {
+         try {
         this.setState({ status: 'loading' })
         const res = await fetchImages(query, page);
-        if (res.data.total === 0) {
+        if (res.total === 0) {
           throw new Error('Images with your query was not found');
         }
-        this.setState(prevState => ({
-          images: [...prevState.images, ...res.data.hits],
-          status: 'finished'
-        }))
+         this.setState(prevState => ({
+           images: [...prevState.images, ...res.hits],
+           status: 'finished'
+         }));
       }
-
-      
-    } catch (error) {
-      console.log(error);
+     catch (error) {
+           console.log(error);
+           }
   }
+  }
+
+
+     handleSubmit = search => {
+      this.setState({
+        query: search,
+        page: 1,
+      images: [],
+      });
   };
 
-  handleSubmit = (value) => {
-    this.setState({
-      query: value.query,
-      page: 1,
-      images: [],
-    });
-}
+ 
 
   loadMore = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
-    }))
-  }
+    }));
+  };
 
   render() {
-    const { images } = this.state;
+    const { images, status } = this.state;
+    console.log({images});
     return (
       <div>
         <Searchbar onSubmit={this.handleSubmit} />
-        <ImageGallery images = {images} />
+        <ImageGallery images={images} />
+        {status === 'loading' && <Spiner />}
       </div>
     );
-  };
+  }
 }
+
+
+
