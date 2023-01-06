@@ -1,4 +1,5 @@
-import css from './ImageGalleryItem.module.css'
+import css from './ImageGalleryItem.module.css';
+import PropTypes from 'prop-types';
 
 export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
     return (
@@ -6,4 +7,9 @@ export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
   <img className={css.imageGalleryItem_image} src={webformatURL} alt="" />
 </li>
     )
+}
+
+ImageGalleryItem.propTypes = {
+    webformatURL: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
 }

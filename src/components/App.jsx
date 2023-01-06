@@ -1,10 +1,10 @@
 
 import { Component } from 'react';
-//  import { ToastContainer, toast } from 'react-toastify';
 import { Searchbar } from './Searchbar/Searchbar';
 import { fetchImages } from '../Services/Api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Spiner } from './ImageGalleryItem/Spiner/Spiner';
+import { Spiner } from './Spiner/Spiner';
+import { Button } from './Button/Button';
 
 export class App extends Component {
   state = {
@@ -55,13 +55,14 @@ export class App extends Component {
   };
 
   render() {
-    const { images, status } = this.state;
+    const { images, status, loadMore } = this.state;
     console.log({images});
     return (
       <div>
         <Searchbar onSubmit={this.handleSubmit} />
         <ImageGallery images={images} />
         {status === 'loading' && <Spiner />}
+        {status === 'finished' && <Button loadMore={this.loadMore}/>}
       </div>
     );
   }
