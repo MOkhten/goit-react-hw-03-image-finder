@@ -55,7 +55,7 @@ export class App extends Component {
   };
 
   render() {
-    const { images, status, loadMore } = this.state;
+    const { images, status } = this.state;
     console.log({images});
     return (
       <div>
