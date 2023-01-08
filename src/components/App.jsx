@@ -5,6 +5,7 @@ import { fetchImages } from '../Services/Api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Spiner } from './Spiner/Spiner';
 import { Button } from './Button/Button';
+import { Modal } from './Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -12,7 +13,7 @@ export class App extends Component {
     status: 'idle',
     page: 1,
     images: [],
-    
+    modalImg: '',
   };
 
 
@@ -54,15 +55,20 @@ export class App extends Component {
     }));
   };
 
+  toggleModal = (image) => {
+    this.setState({ modalImg: image });
+  }
+
   render() {
-    const { images, status } = this.state;
+    const { images, status, modalImg } = this.state;
     console.log({images});
     return (
       <div>
         <Searchbar onSubmit={this.handleSubmit} />
-        <ImageGallery images={images} />
+        <ImageGallery images={images} onClick={this.toggleModal} />
         {status === 'loading' && <Spiner />}
-        {status === 'finished' && <Button loadMore={this.loadMore}/>}
+        {status === 'finished' && <Button loadMore={this.loadMore} />}
+        { modalImg && <Modal image={modalImg} onClose={this.toggleModal}/>}
       </div>
     );
   }

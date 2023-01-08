@@ -13,6 +13,7 @@ export const ImageGallery = ({ images, ...otherProps }) => {
           <ImageGalleryItem
             key={id}
             webformatURL={webformatURL}
+          largeImageURL={largeImageURL}
             {...otherProps}
           />
         );
@@ -26,5 +27,6 @@ ImageGalleryItem.propTypes = {
         id: PropTypes.number.isRequired,
         webformatURL: PropTypes.string.isRequired,
         largeImageURL: PropTypes.string.isRequired,
-    })),
+  })),
+   onClick: PropTypes.func.isRequired,
 }
