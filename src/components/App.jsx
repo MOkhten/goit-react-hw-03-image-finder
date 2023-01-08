@@ -1,5 +1,6 @@
 
 import { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { Searchbar } from './Searchbar/Searchbar';
 import { fetchImages } from '../Services/Api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
@@ -33,8 +34,9 @@ export class App extends Component {
          }));
       }
      catch (error) {
-           console.log(error);
+           toast.error('Oops! Something went wrong! Please try again.');
            }
+           this.setState({ status: 'idle' });
   }
   }
 
@@ -68,7 +70,8 @@ export class App extends Component {
         <ImageGallery images={images} onClick={this.toggleModal} />
         {status === 'loading' && <Spiner />}
         {status === 'finished' && <Button loadMore={this.loadMore} />}
-        { modalImg && <Modal image={modalImg} onClose={this.toggleModal}/>}
+        {modalImg && <Modal image={modalImg} onClose={this.toggleModal} />}
+        <ToastContainer />
       </div>
     );
   }
